@@ -84,7 +84,11 @@
 
         <div class="info">
           <div class="wraper">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptate blanditiis minus, recusandae odit perferendis nobis alias vero aperiam laboriosam, corrupti non porro! Saepe, temporibus illo magni impedit quis architecto. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur voluptatem ut repudiandae! Odit eligendi deleniti vitae ducimus necessitatibus perspiciatis. Perferendis rem nesciunt eligendi nemo suscipit similique magnam ullam neque quo.</p>
+            <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptate blanditiis minus, recusandae odit perferendis nobis alias vero aperiam laboriosam, corrupti non porro! Saepe, temporibus illo magni impedit quis architecto. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur voluptatem ut repudiandae! Odit eligendi deleniti vitae ducimus necessitatibus perspiciatis. Perferendis rem nesciunt eligendi nemo suscipit similique magnam ullam neque quo.</p> -->
+
+            <div class="half-doc">
+              <div class="document-render" id="documentRender"></div>
+            </div>
 
             <ul id="sortable"></ul>
 
@@ -123,13 +127,34 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
     $(document).ready(function() {
+
+      // Checked items
+      function getCheckedItems() {
+        var items = $("#js-searchResult li input:checkbox:checked").map(function () {
+          return $(this).val();
+        }).get();
+        return items;
+      }
+
       // Search Users
       $('.js-users').on('keyup', function () {
-          var value = $(this).val().toLowerCase();
+        
+        var value = $(this).val().toLowerCase();
+      
           $("#js-searchResult li").filter(function () {
             $(this).toggle($(this).html().toLowerCase().indexOf(value) > -1)
+            if ($(this).find('input').prop("checked") == true) {
+              $(this).removeAttr('style');
+            }
+            else{
+              if(value == ""){
+                $(this).hide()
+              }
+            }
           });
 
+          let checkedItems = getCheckedItems();
+          (value == '' && checkedItems.length < 1) ? $('.search-result').removeClass('show') : $('.search-result').addClass('show');
       });
 
 
@@ -142,19 +167,19 @@
 
       $("#js-searchResult li input").on('change', function(e){
         e.preventDefault();
-        var items = $("#js-searchResult li input:checkbox:checked").map(function () {
-          return $(this).val();
-        }).get();
         
+        let checkedItems = getCheckedItems();
         let content = '';
-        for (let i = 0; i < items.length; i++) {
-          content += '<li class="ui-state-default">' + items[i] + '</li>';
+        for (let i = 0; i < checkedItems.length; i++) {
+          content += '<li class="ui-state-default">' + checkedItems[i] + '</li>';
         }
+
+        checkedItems.length < 1 ? $('.search-result').removeClass('show') : false;
         $('#sortable').html(content);
       });
 
+
     });
   </script>
-  
 </body>
 </html>
