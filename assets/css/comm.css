@@ -52,6 +52,22 @@ p {
   width: calc(100% - 20px);
 }
 
+.search-comp select {
+  padding: 6px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  transition: .3s ease-in-out;
+  outline: none;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.search-comp select:hover {
+  border-color: #dca9f0;
+  box-shadow: 0px 0px 0px 3px rgba(0, 0, 0, 0.05);
+}
+
 .search-comp input {
   width: 100%;
   margin-top: 30px;
@@ -86,10 +102,26 @@ p {
   margin-left: 10px;
 }
 
+.info {
+  background-color: #eee;
+}
+
 .info .half-doc {
-  max-height: 430px;
-  overflow-y: scroll;
   position: relative;
+}
+
+.info .half-doc .document-render {
+  display: grid;
+}
+
+.info .half-doc .document-render .sortable {
+  order: 2;
+}
+
+.info .half-doc .document-render canvas {
+  order: 1;
+  margin-bottom: 30px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 @keyframes pop1 {

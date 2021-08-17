@@ -32,34 +32,44 @@
             </li>
 
             <div class="search-comp">
+
+              <select name="selectItems" id="">
+                <option value="">-- Select value --</option>
+                <option value="1">value one</option>
+                <option value="2">value two</option>
+                <option value="3">value three</option>
+                <option value="4">value frour</option>
+                <option value="5">value five</option>
+              </select>
+
               <input type="text" class="primary-input js-users" placeholder="Search">
               <div class="search-result"><br>
                 <h5>Sign Document</h5>
                 <div class="result">
                   <ul id="js-searchResult">
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item1" value="Nimesh">
-                      <label for="item1">Nimesh</label>
+                      <input type="checkbox" name="user_names[]" id="item1" value="John Doe">
+                      <label for="item1">John Doe</label>
                     </li>
 
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item2" value="Dinuka">
-                      <label for="item2">Dinuka</label>
+                      <input type="checkbox" name="user_names[]" id="item2" value="John Smith">
+                      <label for="item2">John Smith</label>
                     </li>
 
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item3" value="Rizvi">
-                      <label for="item3">Rizvi</label>
+                      <input type="checkbox" name="user_names[]" id="item3" value="Larry">
+                      <label for="item3">Larry</label>
                     </li>
 
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item4" value="Hari">
-                      <label for="item4">Hari</label>
+                      <input type="checkbox" name="user_names[]" id="item4" value="Robin">
+                      <label for="item4">Robin</label>
                     </li>
 
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item5" value="Aaron">
-                      <label for="item5">Aaron</label>
+                      <input type="checkbox" name="user_names[]" id="item5" value="James">
+                      <label for="item5">James</label>
                     </li>
                   </ul>
                 </div>
@@ -90,7 +100,7 @@
               <div class="document-render" id="documentRender"></div>
             </div>
 
-            <ul id="sortable"></ul>
+            <!-- <ul id="sortable"></ul> -->
 
           </div>
         </div>
@@ -128,6 +138,24 @@
   <script>
     $(document).ready(function() {
 
+      // let canvasSet = $("#documentRender");
+      // var pdfElements = canvasSet[0].childNodes;
+      // let pdfs = [];
+      // let finalContent = 're';
+
+      // for (let i = 0; i < pdfElements.length; i++) {
+      //   pdfs.push(pdfElements[i]);
+      // }
+      // 
+      // console.log(pdfs[0]);
+      // for (let i = 0; i < pdfs.length; i++) {
+      //   finalContent = pdfs[0] +'<div class="inside-canvas" id="canvElm'+i+'><ul id="sortable" class="sortable"></ul></div>';
+      // }
+
+      // console.log(finalContent);
+      $("#documentRender").html('<ul id="sortable" class="sortable">');
+
+
       // Checked items
       function getCheckedItems() {
         var items = $("#js-searchResult li input:checkbox:checked").map(function () {
@@ -160,8 +188,8 @@
 
       // Dragable
       $(function () {
-        $("#sortable").sortable();
-        $("#sortable").disableSelection();
+        $(".sortable").sortable();
+        $(".sortable").disableSelection();
       });
 
 
@@ -174,12 +202,13 @@
           content += '<li class="ui-state-default">' + checkedItems[i] + '</li>';
         }
 
-        checkedItems.length < 1 ? $('.search-result').removeClass('show') : false;
+        (checkedItems.length < 1 && $('.js-users').val() == "") ? $('.search-result').removeClass('show') : false;
         $('#sortable').html(content);
-      });
+      });     
 
 
     });
+    
   </script>
 </body>
 </html>
