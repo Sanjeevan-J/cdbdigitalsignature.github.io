@@ -114,14 +114,15 @@ p {
   display: grid;
 }
 
-.info .half-doc .document-render .sortable {
-  order: 2;
+.info .half-doc .document-render .draggable {
+  order: 1;
 }
 
 .info .half-doc .document-render canvas {
-  order: 1;
+  order: 2;
   margin-bottom: 30px;
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
+  width: 100%;
 }
 
 @keyframes pop1 {
@@ -139,23 +140,46 @@ p {
   }
 }
 
-#sortable {
-  list-style-type: none;
-  margin: 20px 0 50px 0;
-  padding: 0;
+.js-draggable-container {
   width: 100%;
 }
 
-#sortable li {
+.js-draggable-container .draggable {
+  padding: 20px;
+  border: 1px dashed #9f91a3;
+  background-color: rgba(255, 255, 255, 0.5);
+  list-style: none;
+  margin: 20px auto 50px 0;
+  width: auto;
+  position: absolute;
+  cursor: move;
+  display: none;
+}
+
+.js-draggable-container .draggable:nth-child(even) {
+  margin-top: 120px;
+}
+
+.js-draggable-container .draggable ul {
+  padding: 0;
+  padding-top: 10px;
+}
+
+.js-draggable-container .draggable li,
+.js-draggable-container .draggable div {
   margin: 4px 4px 4px 0;
   padding: 6px 25px;
   float: left;
   text-align: center;
-  background-color: #59236f;
-  color: #fff;
+  background-color: transparent;
+  color: #000;
+  box-shadow: none;
+  border-bottom: 2px dotted;
   border-radius: 0px;
   cursor: move;
   animation: pop1 .3s ease-in-out;
+  list-style: none;
+  margin-right: 5px;
 }
 
 .search-result {

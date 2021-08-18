@@ -34,13 +34,22 @@
             <div class="search-comp">
 
               <select name="selectItems" id="">
-                <option value="">-- Select value --</option>
-                <option value="1">value one</option>
-                <option value="2">value two</option>
-                <option value="3">value three</option>
-                <option value="4">value frour</option>
-                <option value="5">value five</option>
+                <option value="">Select the template</option>
+                <option value="1">Template one</option>
+                <option value="2">Template two</option>
+                <option value="3">Template three</option>
+                <option value="4">Template frour</option>
+                <option value="5">Template five</option>
               </select>
+
+              <div class="result"><br>
+                <ul>
+                  <li style="display: flex; flex-direction: row;">
+                    <input type="checkbox" name="" id="item0" value="signature">
+                    <label style="max-width: 170px;" for="item0">Repeat the signature in all the pages</label>
+                  </li>
+                </ul>
+              </div>
 
               <input type="text" class="primary-input js-users" placeholder="Search">
               <div class="search-result"><br>
@@ -48,32 +57,34 @@
                 <div class="result">
                   <ul id="js-searchResult">
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item1" value="John Doe">
-                      <label for="item1">John Doe</label>
+                      <input type="checkbox" name="user_names[]" id="item1" value="Nimesh">
+                      <label for="item1">Nimesh</label>
                     </li>
 
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item2" value="John Smith">
-                      <label for="item2">John Smith</label>
+                      <input type="checkbox" name="user_names[]" id="item2" value="Dinuka">
+                      <label for="item2">Dinuka</label>
                     </li>
 
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item3" value="Larry">
-                      <label for="item3">Larry</label>
+                      <input type="checkbox" name="user_names[]" id="item3" value="Hari">
+                      <label for="item3">Hari</label>
                     </li>
 
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item4" value="Robin">
-                      <label for="item4">Robin</label>
+                      <input type="checkbox" name="user_names[]" id="item4" value="Rizvi">
+                      <label for="item4">Rizvi</label>
                     </li>
 
                     <li>
-                      <input type="checkbox" name="user_names[]" id="item5" value="James">
-                      <label for="item5">James</label>
+                      <input type="checkbox" name="user_names[]" id="item5" value="Aaron">
+                      <label for="item5">Aaron</label>
                     </li>
                   </ul>
                 </div>
               </div>
+
+              
             </div>
           </ul><!-- .nav -->
         </div><!-- .sidebar-nav -->
@@ -97,10 +108,12 @@
             <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo voluptate blanditiis minus, recusandae odit perferendis nobis alias vero aperiam laboriosam, corrupti non porro! Saepe, temporibus illo magni impedit quis architecto. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur voluptatem ut repudiandae! Odit eligendi deleniti vitae ducimus necessitatibus perspiciatis. Perferendis rem nesciunt eligendi nemo suscipit similique magnam ullam neque quo.</p> -->
 
             <div class="half-doc">
-              <div class="document-render" id="documentRender"></div>
+              <div class="document-render" id="documentRender">
+                <div class="js-draggable-container">
+                  <div class="draggable js-drag-div"></div>
+                </div>
+              </div>
             </div>
-
-            <!-- <ul id="sortable"></ul> -->
 
           </div>
         </div>
@@ -138,23 +151,12 @@
   <script>
     $(document).ready(function() {
 
-      // let canvasSet = $("#documentRender");
-      // var pdfElements = canvasSet[0].childNodes;
-      // let pdfs = [];
-      // let finalContent = 're';
 
-      // for (let i = 0; i < pdfElements.length; i++) {
-      //   pdfs.push(pdfElements[i]);
-      // }
-      // 
-      // console.log(pdfs[0]);
-      // for (let i = 0; i < pdfs.length; i++) {
-      //   finalContent = pdfs[0] +'<div class="inside-canvas" id="canvElm'+i+'><ul id="sortable" class="sortable"></ul></div>';
-      // }
-
-      // console.log(finalContent);
-      $("#documentRender").html('<ul id="sortable" class="sortable">');
-
+      function initDraggable(){
+        $('.sortable').sortable();
+        $('.sortable').disableSelection();
+        $(".draggable").draggable();
+      }
 
       // Checked items
       function getCheckedItems() {
@@ -168,7 +170,6 @@
       $('.js-users').on('keyup', function () {
         
         var value = $(this).val().toLowerCase();
-      
           $("#js-searchResult li").filter(function () {
             $(this).toggle($(this).html().toLowerCase().indexOf(value) > -1)
             if ($(this).find('input').prop("checked") == true) {
@@ -182,14 +183,10 @@
           });
 
           let checkedItems = getCheckedItems();
-          (value == '' && checkedItems.length < 1) ? $('.search-result').removeClass('show') : $('.search-result').addClass('show');
-      });
-
-
-      // Dragable
-      $(function () {
-        $(".sortable").sortable();
-        $(".sortable").disableSelection();
+          (value == '' && checkedItems.length < 1) 
+          ? $('.search-result').removeClass('show') 
+          : $('.search-result').addClass('show');
+          
       });
 
 
@@ -202,13 +199,39 @@
           content += '<li class="ui-state-default">' + checkedItems[i] + '</li>';
         }
 
-        (checkedItems.length < 1 && $('.js-users').val() == "") ? $('.search-result').removeClass('show') : false;
-        $('#sortable').html(content);
-      });     
+        if (checkedItems.length < 1) {
+          if($('.js-users').val() == "") {
+            $('.search-result').removeClass('show'); 
+          }
+          $('.js-drag-div').removeClass('show');
+        }
+        else{
+          $('.js-drag-div').addClass('show');
+        }
+        
+        $('.js-drag-div').html('<ul class="sortable">'+ content+'</ul>');
+        $(function () { initDraggable(); });
+      });
 
+      
+      $('#item0').on('change', function() {
+
+        let copy = $('.js-drag-div').first().clone();
+        let pdfCount = $('#documentRender').find('canvas').length;
+
+        if($(this).prop('checked') == true){
+          for (let i=0; i < pdfCount; i++) {
+            copy.appendTo('.js-draggable-container');
+          }
+        }
+        else{
+          $('.js-draggable-container').html(copy);
+        }
+        
+        $(function () { initDraggable(); });
+      });
 
     });
-    
   </script>
 </body>
 </html>

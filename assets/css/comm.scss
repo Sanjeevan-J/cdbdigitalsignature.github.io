@@ -105,25 +105,15 @@ p {
         // overflow-y: scroll;
         position: relative;
 
-        // &::after {
-        //     content: '';
-        //     position: absolute;
-        //     width: 100%;
-        //     height: 0px;
-        //     bottom: -30px;
-        //     left: 0;
-        //     box-shadow: 0 -20px 30px 10px rgba(0,0,0,0.3);
-        // }
-
         .document-render{
             display: grid;
             
-            .sortable {
-                order: 2;
+            .draggable {
+                order: 1;
             }
             
             canvas {
-                order: 1;
+                order: 2;
                 margin-bottom: 30px;
                 box-shadow: 0px 5px 15px rgba(0,0,0,0.05);
             }
@@ -136,23 +126,47 @@ p {
     80% {opacity: 1; transform: scale(1.01);}
     100% {opacity: 1; transform: scale(1);}
 }
-#sortable { 
-    list-style-type: none;
-    margin: 20px 0 50px 0;
-    padding: 0; 
-    width: 100%;
-}
 
-#sortable li { 
-    margin: 4px 4px 4px 0; 
-    padding: 5px 20px;
-    float: left;
-    text-align: center;
-    background-color: #59236f;
-    color: #fff;
-    border-radius: 50px;
-    cursor: move;
-    animation: pop1 .3s ease-in-out;
+.js-draggable-container {
+    width: 100%;
+    
+    .draggable {
+        padding: 20px;
+        border: 1px dashed #9f91a3;
+        background-color: rgba(255,255,255,0.5);
+        list-style: none;
+        margin: 20px auto 50px 0;
+        width: auto;
+        position: absolute;
+        cursor: move;
+        display: none;
+
+        &:nth-child(even) {
+            margin-top: 120px;
+        }
+
+        ul {
+            padding: 0;
+            padding-top: 10px;
+        }
+    }
+
+    .draggable li,
+    .draggable div { 
+        margin: 4px 4px 4px 0;
+        padding: 6px 25px;
+        float: left;
+        text-align: center;
+        background-color: transparent;
+        color: #000;
+        box-shadow: none;
+        border-bottom: 2px dotted;
+        border-radius: 0px;
+        cursor: move;
+        animation: pop1 .3s ease-in-out;
+        list-style: none;
+        margin-right: 5px;
+    }
 }
 
 .search-result {
